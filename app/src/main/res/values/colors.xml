@@ -3,4 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="toolbar">#FF0000</color>
+    <color name="tabs">#FF00E6FF</color>
+    <color name="floatbutton">#ffae00</color>
+    <color name="dialogs">#4a8f86</color>
+    <color name="rv">#f10307</color>
+    <color name="bottomsheet">#f103c9</color>
+    <color name="scrollbar">#039ef1</color>
+    <color name="searchview">#f1031f</color>
+    <color name="picker">#35a7b4</color>
 </resources>

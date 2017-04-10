@@ -1,8 +1,11 @@
 package cj.com.designmaterial;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,17 +16,66 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
+import cj.com.designmaterial.adapter.RVAdapter;
+import cj.com.designmaterial.enity.RVItem;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private RecyclerView rl;
+    private Toolbar toolbar;
+    private FloatingActionButton fab;
+    private  DrawerLayout drawer;
+    private  NavigationView navigationView;
 
+    private ArrayList<RVItem> list = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        initView();
+        addListener();
+    }
+
+    private void initView(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        setRecyclerView();
+    }
+
+    private void setRecyclerView(){
+        rl = (RecyclerView)findViewById(R.id.rl);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rl.setLayoutManager(layoutManager);
+        setDatas();
+        RVAdapter adapter = new RVAdapter(list,this);
+        rl.setAdapter(adapter);
+    }
+
+    private void setDatas() {
+        list.clear();
+        Resources resources = getResources();
+        list.add(new RVItem("Toolbar", resources.getColor(R.color.toolbar)));
+        list.add(new RVItem("Material Tabs", resources.getColor(R.color.tabs)));
+        list.add(new RVItem("Floating Action Button", resources.getColor(R.color.floatbutton)));
+        list.add(new RVItem("Material Dialogs", resources.getColor(R.color.dialogs)));
+        list.add(new RVItem("RecyclerView", resources.getColor(R.color.rv)));
+        list.add(new RVItem("Bottomsheet", resources.getColor(R.color.bottomsheet)));
+        list.add(new RVItem("Material Scrollbar", resources.getColor(R.color.scrollbar)));
+        list.add(new RVItem("SearchView", resources.getColor(R.color.searchview)));
+        list.add(new RVItem("Material Picker", resources.getColor(R.color.picker)));
+    }
+
+    private void addListener(){
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,16 +84,14 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
         toggle.syncState();
+        drawer.setDrawerListener(toggle);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
 
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
